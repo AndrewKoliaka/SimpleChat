@@ -22,7 +22,9 @@ const pathTo = {
     },
     libs: {
         css: [
-            "node_modules/milligram/dist/milligram.min.css"
+            "node_modules/spectre.css/dist/spectre.min.css",
+            "node_modules/spectre.css/dist/spectre-exp.min.css",
+            "node_modules/spectre.css/dist/spectre-icons.min.css"
         ],
         js: [
             "node_modules/angular/angular.min.js",
