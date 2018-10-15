@@ -1,25 +1,66 @@
 <section class="columns">
     <div class="column col-6 col-sm-12 col-mx-auto">
         <h2>Register</h2>
-        <form name="registerForm">
+        <form name="registerForm"
+            data-ng-submit="authCtrl.register()">
             <div class="form-group">
                 <label class="form-label" for="username">Username</label>
-                <input class="form-input" type="text" id="username" placeholder="John Doe">
+                <input class="form-input"
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="John Doe"
+                    data-ng-model="auth.data.name"
+                    data-ng-class="{ 'is-error': registerForm.username.$invalid }"
+                    data-ng-minlength="3"
+                    data-ng-maxlength="25">
+                <p class="form-input-hint"
+                    data-ng-show="registerForm.username.$invalid">Username is invalid</p>
             </div>
             <div class="form-group">
                 <label class="form-label" for="email">Email *</label>
-                <input class="form-input" type="text" id="email" placeholder="john.doe@test.com">
+                <input class="form-input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="john.doe@test.com"
+                    data-ng-class="{ 'is-error': registerForm.email.$invalid }"
+                    data-ng-required="auth.data.email"
+                    data-ng-model="auth.data.email">
+                <p class="form-input-hint"
+                    data-ng-show="registerForm.email.$invalid">Email is invalid</p>
             </div>
             <div class="form-group">
                 <label class="form-label" for="password">Password *</label>
-                <input class="form-input" type="text" id="password" placeholder="Password">
+                <input class="form-input"
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    data-ng-class="{ 'is-error': registerForm.password.$invalid }"
+                    data-ng-required="auth.data.password"
+                    data-ng-model="auth.data.password"
+                    data-ng-minlength="5">
+                <p class="form-input-hint"
+                    data-ng-show="registerForm.password.$invalid">Password is too short</p>
             </div>
             <div class="form-group">
                 <label class="form-label" for="password-repeat">Repeat password *</label>
-                <input class="form-input" type="text" id="password-repeat" placeholder="Repeat password">
+                <input class="form-input"
+                    type="password"
+                    id="password-repeat"
+                    name="passwordRepeat"
+                    placeholder="Repeat password"
+                    data-ng-class="{ 'is-error': registerForm.passwordRepeat.$invalid && registerForm.passwordRepeat.$dirty }"
+                    data-ng-required="auth.data.passwordRepeat"
+                    data-ng-model="auth.data.passwordRepeat"
+                    data-ng-minlength="5"
+                    data-password-repeat="auth.data.password">
+                <p class="form-input-hint"
+                    data-ng-show="registerForm.passwordRepeat.$invalid && registerForm.passwordRepeat.$dirty">Passwords don't match</p>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary mt-2">Register</button>
+                <input class="btn btn-primary mt-2" type="submit" value="Register">
             </div>
         </form>
     </div>

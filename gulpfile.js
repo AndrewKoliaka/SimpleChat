@@ -57,10 +57,10 @@ gulp.task('css', () =>
 gulp.task('js', () =>
     gulp.src(pathTo.src.js)
         .pipe(concat('app.js'))
-        .pipe(babel())
-        .pipe(uglify({
-            mangle: false
-        }))
+        // .pipe(babel())
+        // .pipe(uglify({
+        //     mangle: false
+        // }))
         .pipe(gulp.dest(pathTo.bin.js))
 );
 
