@@ -15,12 +15,20 @@
     <main class="container" data-ng-controller="auth.controller as authCtrl">
         <header class="navbar">
             <section class="navbar-section">
-                <a ui-sref="/" class="navbar-brand mr-2">Simple Chat</a>
-                <a ui-sref="login" class="btn btn-link">Login</a>
-                <a ui-sref="register" class="btn btn-link">Register</a>
+                <a class="navbar-brand mr-2" ui-sref="/">Simple Chat</a>
+                <span data-ng-if="!auth.isLogged">
+                    <a class="btn btn-link" ui-sref="login">Login</a>
+                    <a class="btn btn-link" ui-sref="register">Register</a>
+                </span>
+                <span data-ng-if="auth.isLogged">
+                    <a class="btn btn-link" data-ng-click="authCtrl.signOut()">Sign out</a>
+                </span>
             </section>
         </header>
-        <div class="mt-2" ui-view></div>
+        <br>
+        <br>
+        <br>
+        <div ui-view></div>
     </main>
 </body>
 

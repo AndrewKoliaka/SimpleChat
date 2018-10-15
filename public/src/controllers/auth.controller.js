@@ -32,7 +32,7 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
         $authData.login($scope.auth.data)
             .then(() => {
                 $scope.auth.isLogged = true;
-                $state.go('notes');
+                $state.go('home');
             })
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
@@ -49,7 +49,7 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
         $authData.register($scope.auth.data)
             .then(() => {
                 $scope.auth.isLogged = true;
-                $state.go('notes');
+                $state.go('home');
             })
             .catch($errorAlert.show)
             .finally(this._hideSpinner);

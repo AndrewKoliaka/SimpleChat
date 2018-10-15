@@ -5,12 +5,13 @@ const roomSchema = mongoose.Schema({
         type: String,
         default: 'room'
     },
-    users: {
+    participants: {
         type: Array,
         default: []
     },
     dateCreated: {
-        type: Date
+        type: Date,
+        default: Date.now
     }
 });
 

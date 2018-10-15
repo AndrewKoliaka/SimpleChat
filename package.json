@@ -35,11 +35,13 @@
   },
   "dependencies": {
     "angular": "^1.7.5",
+    "angular-cookies": "^1.7.5",
     "angular-resource": "^1.7.5",
     "angular-ui-router": "^1.0.20",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.0",
     "spectre.css": "^0.5.3"
   }

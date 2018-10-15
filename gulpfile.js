@@ -15,7 +15,7 @@ const pathTo = {
         css: 'bin/css'
     },
     src: {
-        views: 'public/src/views/**/*.html',
+        views: 'public/src/views/*.html',
         js: 'public/src/**/*.js',
         css: 'public/styles.css',
         index: 'public/index.html'
@@ -29,7 +29,8 @@ const pathTo = {
         js: [
             "node_modules/angular/angular.min.js",
             "node_modules/angular-ui-router/release/angular-ui-router.min.js",
-            "node_modules/angular-resource/angular-resource.min.js"
+            "node_modules/angular-resource/angular-resource.min.js",
+            "node_modules/angular-cookies/angular-cookies.min.js"
         ]
     }
 }

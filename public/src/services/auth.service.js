@@ -1,35 +1,27 @@
-app.service('$authData', function ($data, $localStorage, $labels, $q) {
+app.service('$authData', function ($data, $cookies, $q) {
+    const tokenKey = 'token';
 
-    this.isLogged = () => !!$localStorage.getItem($labels.LOGIN);
+    this.isLogged = () => !!$cookies.get(tokenKey);
 
-    this.getUserData = () => $localStorage.getItem($labels.LOGIN);
+    this.decodeToken = () => {
+        const token = $cookies.get(tokenKey);
+        const decoded = {};
 
-    this.login = (loginData = {}) =>
-        $data.login(loginData)
-        .then(res => {
-            $localStorage.setItem($labels.LOGIN, {
-                id: res.id
-            });
+        decoded.header = JSON.parse(window.atob(token.split('.')[0]));
+        decoded.payload = JSON.parse(window.atob(token.split('.')[1]));
 
-            return res;
-        });
+        return decoded;
+    };
 
-    this.register = (registerData = {}) =>
-        $data.register(registerData)
-        .then(res => {
-            $localStorage.setItem($labels.LOGIN, {
-                id: res._id
-            });
+    this.login = (loginData = {}) => $data.login(loginData);
 
-            return res;
-        });
-
+    this.register = (registerData = {}) => $data.register(registerData);
 
     this.signOut = () => {
-        var deferred = $q.defer();
+        const deferred = $q.defer();
 
         if (this.isLogged()) {
-            $localStorage.removeItem($labels.LOGIN);
+            $cookies.remove(tokenKey);
             deferred.resolve();
         } else {
             deferred.reject();
