@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const jwtUtils = require('../utils/jwt');
 
-module.exports.authLogin = async (req, res) => {
+module.exports.loginUser = async (req, res) => {
 	const { email, password } = req.body;
 
 	try {
@@ -21,7 +21,7 @@ module.exports.authLogin = async (req, res) => {
 	}
 }
 
-module.exports.authRegister = async (req, res) => {
+module.exports.registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
 	try {
@@ -37,4 +37,16 @@ module.exports.authRegister = async (req, res) => {
 	} catch (error) {
 		res.status(500).json(error);
 	}
+}
+
+module.exports.getUser = async (req, res) => {
+	res.send('NOT_IMPLEMENTED: get user');
+}
+
+module.exports.updateUser = async (req, res) => {
+	res.send('NOT_IMPLEMENTED: update user');
+}
+
+module.exports.deleteUser = async (req, res) => {
+	res.send('NOT_IMPLEMENTED: delete user');
 }

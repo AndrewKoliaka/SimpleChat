@@ -21,6 +21,7 @@
                     <a class="btn btn-link" ui-sref="register">Register</a>
                 </span>
                 <span data-ng-if="auth.isLogged">
+                    <a class="btn btn-link" ui-sref="profile">Profile</a>
                     <a class="btn btn-link" data-ng-click="authCtrl.signOut()">Sign out</a>
                 </span>
             </section>

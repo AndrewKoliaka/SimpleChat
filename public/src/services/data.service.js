@@ -1,11 +1,17 @@
 app.service('$data', function ($resource, $api) {
+
     this.login = params => $resource($api.login).save(params).$promise;
     this.register = params => $resource($api.register).save(params).$promise;
+    this.getUser = id => $resource($api.getUser, { id }).get().$promise;
+    this.updateUser = (id, params) => $resource($api.updateUser, { id }).save(params).$promise;
+    this.deleteUser = id => $resource($api.deleteUser, { id }).delete().$promise;
+
     this.getRooms = () => $resource($api.getRooms).get().$promise;
     this.getRoom = id => $resource($api.getRoom, { id }).get().$promise;
     this.updateRoom = (id, params) => $resource($api.updateRoom, { id }).save(params).$promise;
     this.creteRoom = params => $resource($api.postRoom).save(params).$promise;
     this.deleteRoom = id => $resource($api.deleteRoom, { id }).delete().$promise;
+
     this.getMessages = roomId => $resource($api.getMessages, { id: roomId }).get().$promise;
     this.postMessage = params => $resource($api.postMessage).save(params).$promise;
     this.updateMessage = (id, params) => $resource($api.updateMessage, { id }).save(params).$promise;

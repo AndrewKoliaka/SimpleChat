@@ -21,6 +21,18 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 					});
 				}
 			}
+		})
+		.state('profile', {
+			url: '/profile',
+			templateUrl: 'views/profile.html',
+			controller: 'profile.controller',
+			onEnter($timeout, $authData, $state) {
+				if (!$authData.isLogged()) {
+					$timeout(() => {
+						$state.go('login');
+					});
+				}
+			}
 		});
 
 	$urlRouterProvider.otherwise('/home');
