@@ -42,12 +42,10 @@ module.exports.registerUser = async (req, res) => {
 module.exports.updateUser = async (req, res) => {
 	const { name } = req.body;
 	const { id } = req.params;
-	const { token } = req.cookies;
 
 	try {
 		await User.updateOne({ _id: id }, { name });
-		const tokenData = jwtUtils.decode(token);
-		const newTokenData = { id: tokenData.payload.id, email: tokenData.payload.email, name };
+		const newTokenData = { id: req.tokenData.id, email: req.tokenData.email, name };
 		const newToken = await jwtUtils.sign(newTokenData);
 
 		res.cookie('token', newToken);

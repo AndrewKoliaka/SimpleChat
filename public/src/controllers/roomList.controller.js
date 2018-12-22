@@ -12,7 +12,7 @@ app.controller('roomList.controller', function ($scope, $state, $roomData) {
         $scope.roomList.isSpinner = true;
 
         $roomData.getRooms()
-            .then(response => { $scope.roomList.rooms = response })
+            .then(({ data }) => { $scope.roomList.rooms = data })
             .finally(() => { $scope.roomList.isSpinner = false; });
     };
 
@@ -27,5 +27,7 @@ app.controller('roomList.controller', function ($scope, $state, $roomData) {
         }
     };
 
-    this.deleteRoom = id => $roomData.delete(id).then(this.loadRooms);
+    this.deleteRoom = id => {
+        $roomData.delete(id).then(this.loadRooms)
+    };
 });

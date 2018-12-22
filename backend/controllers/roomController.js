@@ -2,10 +2,12 @@ const Room = require('../models/roomModel');
 const Message = require('../models/messageModel');
 
 module.exports.getRoomsList = async (req, res) => {
-    try {
-        const userRooms = await Room.find({ participants: req.tokenData.id });
+    const { id } = req.tokenData;
 
-        res.status(200).json(userRooms);
+    try {
+        const userRooms = await Room.find({ participants: id });
+
+        res.status(200).json({ data: userRooms });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -33,10 +35,11 @@ module.exports.createRoom = async (req, res) => {
 }
 
 module.exports.updateRoom = async (req, res) => {
-    const { id, participants = [], name = '', dateCreated = Date.now() } = req.body;
+    const { name } = req.body;
+    const { id } = req.params;
 
     try {
-        await Room.findOneAndUpdate({ _id: id }, { $set: { name, participants, dateCreated } });
+        await Room.updateOne({ _id: id }, { name });
         res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error);
@@ -44,10 +47,10 @@ module.exports.updateRoom = async (req, res) => {
 }
 
 module.exports.deleteRoom = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try {
-        await Room.findOneAndDelete({ _id: id });
+        await Room.deleteOne({ _id: id });
         res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error);
