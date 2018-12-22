@@ -12,7 +12,7 @@ module.exports.loginUser = async (req, res) => {
 			const token = await jwtUtils.sign(tokenData);
 
 			res.cookie('token', token);
-			res.status(200).send(token);
+			res.sendStatus(200);
 		} else {
 			res.status(404).json({ info: "User not found" });
 		}
@@ -33,20 +33,39 @@ module.exports.registerUser = async (req, res) => {
 		const token = await jwtUtils.sign(tokenData);
 
 		res.cookie('token', token);
-		res.status(200).send(token);
+		res.sendStatus(200);
 	} catch (error) {
 		res.status(500).json(error);
 	}
 }
 
-module.exports.getUser = async (req, res) => {
-	res.send('NOT_IMPLEMENTED: get user');
-}
-
 module.exports.updateUser = async (req, res) => {
-	res.send('NOT_IMPLEMENTED: update user');
+	const { name } = req.body;
+	const { id } = req.params;
+	const { token } = req.cookies;
+
+	try {
+		await User.updateOne({ _id: id }, { name });
+		const tokenData = jwtUtils.decode(token);
+		const newTokenData = { id: tokenData.payload.id, email: tokenData.payload.email, name };
+		const newToken = await jwtUtils.sign(newTokenData);
+
+		res.cookie('token', newToken);
+		res.sendStatus(200);
+	} catch (error) {
+		res.status(500).json(error);
+	}
 }
 
 module.exports.deleteUser = async (req, res) => {
-	res.send('NOT_IMPLEMENTED: delete user');
+	const { id } = req.params;
+
+	try {
+		await User.deleteOne({ _id: id });
+
+		res.clearCookie('token');
+		res.sendStatus(200);
+	} catch (error) {
+		res.status(500).json(error);
+	}
 }
