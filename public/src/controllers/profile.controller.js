@@ -5,8 +5,8 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
                 id: null,
                 name: null,
                 email: null
-			},
-			isSpinner: false
+            },
+            isSpinner: false
         };
 
         $scope.profile.data = $authData.decodeToken().payload;
@@ -21,23 +21,23 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
     }
 
     this.updateUserData = () => {
-		const { id, name } = $scope.profile.data;
+        const { id, name } = $scope.profile.data;
 
-		$scope.profile.isSpinner = true;
+        $scope.profile.isSpinner = true;
 
-		$profileData.updateUser(id, { name })
-			.finally(() => { $scope.profile.isSpinner = false} );
+        $profileData.updateUser(id, { name })
+            .finally(() => { $scope.profile.isSpinner = false });
     }
 
     this.deleteAccount = () => {
-		const isConfirm = confirm('Are sure? You will not be able to revert this change');
+        const isConfirm = confirm('Are sure? You will not be able to revert this change');
 
-		if (isConfirm) {
-			$profileData.deleteUser($scope.profile.data.id)
-				.then(() => {
-					$authData.signOut();
-					$state.go('register');
-				});
-		}
+        if (isConfirm) {
+            $profileData.deleteUser($scope.profile.data.id)
+                .then(() => {
+                    $authData.signOut();
+                    $state.go('register');
+                });
+        }
     }
 });

@@ -30,9 +30,9 @@ app.service('$data', function ($resource, $api) {
         getOne: {
             url: $api.getRoom,
             method: 'GET',
-            params: { id: '@id'}
+            params: { id: '@id' }
         },
-        getList: {
+        getAll: {
             url: $api.getRooms,
             method: 'GET'
         },
@@ -53,7 +53,7 @@ app.service('$data', function ($resource, $api) {
     });
 
     this.message = $resource(null, {}, {
-        getList: {
+        getConversation: {
             url: $api.getMessages,
             method: 'GET',
             params: { id: '@roomId' }
