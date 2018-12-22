@@ -1,5 +1,5 @@
 app.service('$profileData', function ($data) {
-	this.getUser = id => $data.getUser(id);
-	this.updateUser = (id, userData = {}) => $data.updateUser(id, userData);
-	this.deleteUser = id => $data.deleteUser(id);
+	this.getUser = id => $data.user.get(id).$promise;
+	this.updateUser = (id, userData = {}) => $data.user.update({ id }, userData).$promise;
+	this.deleteUser = id => $data.user.delete({ id }).$promise;
 });

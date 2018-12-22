@@ -13,9 +13,9 @@ app.service('$authData', function ($data, $cookies, $q) {
         return decoded;
     };
 
-    this.login = (loginData = {}) => $data.login(loginData);
+    this.login = (loginData = {}) => $data.user.login(loginData).$promise;
 
-    this.register = (registerData = {}) => $data.register(registerData);
+    this.register = (registerData = {}) => $data.user.register(registerData).$promise;
 
     this.signOut = () => {
         const deferred = $q.defer();
