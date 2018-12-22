@@ -1,36 +1,41 @@
-<section class="columns">
+<section class="columns" data-ng-controller="profile.controller as profileCtrl">
     <div class="panel col-5 col-sm-12 col-mx-auto">
         <header class="panel-header text-center">
-            <figure class="avatar avatar-xl">
-                <img src="" alt="">
-            </figure>
-            <div class="tile-action">
-                <button class="btn btn-link btn-action btn-lg tooltip tooltip-top" data-tooltip="Update avatar"><i class="icon icon-edit"></i></button>
-            </div>
-            <div class="panel-title">Title</div>
+            <h2 class="panel-title">Account information</h2>
         </header>
         <div class="panel-body">
             <div class="tile tile-centered">
                 <div class="tile-content">
                     <div class="tile-title text-bold">Username</div>
-                    <div class="tile-subtitle">Andrey Koliaka</div>
+                    <div class="tile-subtitle">{{ profile.data.name }}</div>
                 </div>
                 <div class="tile-action">
-                    <button class="btn btn-link btn-action btn-lg tooltip tooltip-left" data-tooltip="Edit username"><i class="icon icon-edit"></i></button>
+                    <button class="btn btn-link btn-action btn-lg tooltip tooltip-left"
+                        data-tooltip="Edit username"
+                        data-ng-click="profileCtrl.enterUserName()">
+                        <i class="icon icon-edit"></i>
+                    </button>
                 </div>
             </div>
             <div class="tile tile-centered mt-2">
                 <div class="tile-content">
                     <div class="tile-title text-bold">Account</div>
-                    <div class="tile-subtitle">test@test.com</div>
+                    <div class="tile-subtitle">{{ profile.data.email }}</div>
                 </div>
                 <div class="tile-action">
-                    <button class="btn btn-link btn-action btn-lg tooltip tooltip-left" data-tooltip="Delete account"><i class="icon icon-delete text-error"></i></button>
+                    <button class="btn btn-link btn-action btn-lg tooltip tooltip-left"
+                        data-tooltip="Delete account"
+                        data-ng-click="profileCtrl.deleteAccount()">
+                        <i class="icon icon-delete text-error"></i>
+                    </button>
                 </div>
             </div>
         </div>
         <footer class="panel-footer">
-            <button class="btn btn-primary btn-block">Save</button>
+            <button class="btn btn-primary btn-block"
+                data-ng-if="!profile.isSpinner"
+                data-ng-click="profileCtrl.updateUserData()">Save</button>
+            <div class="loading loading-lg" data-ng-if="profile.isSpinner"></div>
         </footer>
     </div>
 </section>

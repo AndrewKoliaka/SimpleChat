@@ -7,11 +7,8 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
                 password: '',
                 passwordRepeat: ''
             },
-            isSpinner: false,
-            isLogged: false
+            isSpinner: false
         }
-
-        $scope.auth.isLogged = $authData.isLogged();
     }
 
     this._showSpinner = () => {
@@ -22,6 +19,8 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
         $scope.auth.isSpinner = false;
     }
 
+    this.checkIsLogged = () => $authData.isLogged();
+
     this.login = () => {
         if (
             !$scope.auth.data.email ||
@@ -30,10 +29,7 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
 
         this._showSpinner();
         $authData.login($scope.auth.data)
-            .then(() => {
-                $scope.auth.isLogged = true;
-                $state.go('home');
-            })
+            .then(() => $state.go('home'))
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
     }
@@ -47,20 +43,14 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
 
         this._showSpinner();
         $authData.register($scope.auth.data)
-            .then(() => {
-                $scope.auth.isLogged = true;
-                $state.go('home');
-            })
+            .then(() => $state.go('home'))
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
     }
 
     this.signOut = () => {
         $authData.signOut()
-            .then(() => {
-                $scope.auth.isLogged = false;
-                $state.go('login');
-            })
+            .then(() => $state.go('login'))
             .catch($errorAlert.show);
     }
 });
