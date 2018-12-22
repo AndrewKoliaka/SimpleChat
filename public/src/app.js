@@ -10,20 +10,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 			url: '/register',
 			templateUrl: 'views/register.html'
 		})
-		.state('home', {
-			url: '/home',
-			templateUrl: 'views/home.html',
-			controller: 'home.controller',
-			onEnter($timeout, $authData, $state) {
-				if (!$authData.isLogged()) {
-					$timeout(() => {
-						$state.go('login');
-					});
-				}
-			}
-		})
 		.state('profile', {
-			url: '/profile',
+			url: '/users/{userId}/profile',
 			templateUrl: 'views/profile.html',
 			controller: 'profile.controller',
 			onEnter($timeout, $authData, $state) {
@@ -33,7 +21,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 					});
 				}
 			}
+		})
+		.state('rooms', {
+			url: '/users/{userId}/rooms',
+			templateUrl: 'views/roomList.html',
+			controller: 'roomList.controller',
+			onEnter($timeout, $authData, $state) {
+				if (!$authData.isLogged()) {
+					$timeout(() => {
+						$state.go('login');
+					});
+				}
+			}
 		});
 
-	$urlRouterProvider.otherwise('/home');
+	$urlRouterProvider.otherwise('/rooms');
 });

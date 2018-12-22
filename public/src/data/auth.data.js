@@ -13,6 +13,16 @@ app.service('$authData', function ($data, $cookies, $q) {
         return decoded;
     };
 
+    this.getUserId = () => {
+        if (this.isLogged()) {
+            const tokenData = this.decodeToken();
+
+            return tokenData.payload.id;
+        }
+
+        return undefined;
+    };
+
     this.login = (loginData = {}) => $data.user.login(loginData).$promise;
 
     this.register = (registerData = {}) => $data.user.register(registerData).$promise;
