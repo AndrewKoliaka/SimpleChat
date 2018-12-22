@@ -12,20 +12,24 @@ app.controller('roomList.controller', function ($scope, $state, $roomData) {
         $scope.roomList.isSpinner = true;
 
         $roomData.getRooms()
-            .then(response => { $scope.roomList.rooms = response })
+            .then(({ data }) => { $scope.roomList.rooms = data })
             .finally(() => { $scope.roomList.isSpinner = false; });
     };
 
     this.createRoom = () => $state.go('users');
 
-    this.renameRoom = id => {
+    this.renameRoom = room => {
         const newRoomName = prompt('Please enter new name', 'My chat');
 
         if (newRoomName) {
-            $roomData.update(id, { name: newRoomName })
+            const updateData = { ...room, name: newRoomName };
+
+            $roomData.update(room._id, updateData)
                 .then(this.loadRooms);
         }
     };
 
-    this.deleteRoom = id => $roomData.delete(id).then(this.loadRooms);
+    this.deleteRoom = id => {
+        $roomData.delete(id).then(this.loadRooms)
+    };
 });
