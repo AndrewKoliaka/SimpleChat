@@ -39,6 +39,16 @@ module.exports.registerUser = async (req, res) => {
 	}
 }
 
+module.exports.getUserList = async (req, res) => {
+	try {
+		const userList = await User.find();
+
+		res.status(200).json({ data: userList });
+	} catch (error) {
+		res.status(500).json(error);
+	}
+}
+
 module.exports.updateUser = async (req, res) => {
 	const { name } = req.body;
 	const { id } = req.params;

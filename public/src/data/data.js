@@ -9,10 +9,14 @@ app.service('$data', function ($resource, $api) {
             url: $api.register,
             method: 'POST'
         },
-        get: {
+        getOne: {
             url: $api.getUser,
             method: 'GET',
             params: { id: '@id' }
+        },
+        getAll: {
+            url: $api.getUsers,
+            method: 'GET'
         },
         update: {
             url: $api.updateUser,

@@ -22,6 +22,7 @@
                 </span>
                 <span data-ng-if="authCtrl.checkIsLogged()">
                     <a class="btn btn-link" ui-sref="rooms({ userId: auth.userId })">Chats</a>
+                    <a class="btn btn-link" ui-sref="users">Users</a>
                     <a class="btn btn-link" ui-sref="profile({ userId: auth.userId })">Profile</a>
                     <a class="btn btn-link" data-ng-click="authCtrl.signOut()">Sign out</a>
                 </span>
