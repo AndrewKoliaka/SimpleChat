@@ -27,6 +27,16 @@ app.service('$data', function ($resource, $api) {
             url: $api.deleteUser,
             method: 'DELETE',
             params: { id: '@id' }
+        },
+        block: {
+            url: $api.blockUser,
+            method: 'PUT',
+            params: { id: '@id' }
+        },
+        unBlock: {
+            url: $api.unBlockUser,
+            method: 'PUT',
+            params: { id: '@id' }
         }
     });
 

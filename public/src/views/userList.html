@@ -1,22 +1,28 @@
 <section class="columns">
-        <div class="column">
-            <h2 class="text-center">Users</h2>
-            <!-- <div class="input-group col-6 col-mx-auto">
+    <div class="column">
+        <h2 class="text-center">Users</h2>
+        <!-- <div class="input-group col-6 col-mx-auto">
                 <input type="text" class="form-input" placeholder="Search for user">
                 <button class="btn btn-primary input-group-btn">Search</button>
             </div>
             <br> -->
-            <div class="divider"></div>
+        <div class="divider"></div>
 
-            <div class="loading loading-lg text-center" data-ng-if="userList.isSpinner"></div>
+        <div class="loading loading-lg text-center" data-ng-if="userList.isSpinner"></div>
 
-            <ul class="col-6 col-mx-auto" data-ng-if="!userList.isSpinner">
-                <li class="columns" data-ng-repeat="user in userList.users">
-                    <span class="column col-7">{{ ::user.name }}</span>
-                    <span class="column col-5 text-right">
-                        <button class="btn">Start messaging</button>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </section>
+        <ul class="col-6 col-mx-auto" data-ng-if="!userList.isSpinner">
+            <li class="columns" data-ng-repeat="user in userList.users">
+                <span class="column col-7">{{ ::user.name }}</span>
+                <span class="column col-5 text-right">
+                    <button class="btn">Start messaging</button>
+                    <button class="btn btn-link tooltip" data-tooltip="Block user" data-ng-if="!userListCtrl.checkIsBlocked(user._id)" data-ng-click="userListCtrl.blockUser(user._id)">
+                        <i class="icon icon-stop text-error"></i>
+                    </button>
+                    <button class="btn btn-link tooltip" data-tooltip="Unblock user" data-ng-if="userListCtrl.checkIsBlocked(user._id)" data-ng-click="userListCtrl.unBlockUser(user._id)">
+                        <i class="icon icon-check text-success"></i>
+                    </button>
+                </span>
+            </li>
+        </ul>
+    </div>
+</section>

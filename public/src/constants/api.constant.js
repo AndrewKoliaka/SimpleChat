@@ -5,6 +5,8 @@ app.constant('$api', {
     getUser: '/api/users/:id',
     updateUser: '/api/users/:id',
     deleteUser: '/api/users/:id',
+    blockUser: '/api/users/:id/block',
+    unBlockUser: '/api/users/:id/unblock',
 
     getRooms: '/api/rooms',
     getRoom: '/api/rooms/:id',

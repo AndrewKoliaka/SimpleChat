@@ -1,4 +1,4 @@
-app.controller('roomList.controller', function ($scope, $state, $roomData) {
+app.controller('roomList.controller', function ($scope, $state, $roomData, $errorAlert) {
     this.$onInit = () => {
         $scope.roomList = {
             rooms: [],
@@ -13,6 +13,7 @@ app.controller('roomList.controller', function ($scope, $state, $roomData) {
 
         $roomData.getRooms()
             .then(({ data }) => { $scope.roomList.rooms = data })
+            .catch($errorAlert.show)
             .finally(() => { $scope.roomList.isSpinner = false; });
     };
 
@@ -25,11 +26,13 @@ app.controller('roomList.controller', function ($scope, $state, $roomData) {
             const updateData = { ...room, name: newRoomName };
 
             $roomData.update(room._id, updateData)
-                .then(this.loadRooms);
+                .then(this.loadRooms)
+                .catch($errorAlert.show);
         }
     };
 
-    this.deleteRoom = id => {
-        $roomData.delete(id).then(this.loadRooms)
-    };
+    this.deleteRoom = id =>
+        $roomData.delete(id)
+        .then(this.loadRooms)
+        .catch($errorAlert.show);
 });
