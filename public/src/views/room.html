@@ -1,15 +1,20 @@
 <section class="columns">
     <div class="column col-12">
-        <h3 class="text-center">Chat name</h3>
+        <h3 class="text-center">{{ room.data.name }}</h3>
+        <div class="text-center">
+            Created:
+            <time datetime="{{ room.data.dateCreated }}">{{ room.data.dateCreated | date }}</time>
+        </div>
         <div class="text-center">
             Participants:
-            <span class="chip" data-ng-repeat="participant in room.participants">{{ participant.name }}</span>
+            <span class="chip" data-ng-repeat="participant in room.data.participants">{{ participant.name }}</span>
         </div>
         <div class="divider"></div>
     </div>
 
     <div class="column col-10 col-mx-auto">
-        <ul>
+        <div class="loading loading-lg text-center" data-ng-if="room.isSpinner"></div>
+        <ul data-ng-if="!room.isSpinner">
             <li data-ng-repeat="participant in room.participants">
                 <span class="text-bold">{{ participant.name }}</span>
                 <p>{{ participant.message }}</p>

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = mongoose.Schema({
+const userSchema = Schema({
 	name: {
         type: String,
         default: 'user'
@@ -17,10 +18,9 @@ const userSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	banList: {
-		type: Array,
-		default: []
-	}
+	banList: [{
+		type: Schema.Types.ObjectId
+	}]
 });
 
 module.exports = mongoose.model('User', userSchema);

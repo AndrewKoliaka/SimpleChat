@@ -45,14 +45,10 @@ module.exports.getUserList = async (req, res) => {
 
     try {
         const getUserPromise = User.findOne({ _id: id });
-        const getUserListPromise = User.aggregate([
-            {
-                $match: { _id: { $ne: ObjectId(id) } }
-			},
-            {
-                $project: { name: 1, email: 1, banList: 1 }
-			}
-		]).then(results => results.filter(userItem => !userItem.banList.includes(id)));
+        const getUserListPromise = User.find()
+            .where('_id').ne(id)
+            .select(['name', 'email', 'banList'])
+            .then(results => results.filter(userItem => !~userItem.banList.indexOf(id)));
 
         const results = await Promise.all([getUserPromise, getUserListPromise]);
 
@@ -86,7 +82,6 @@ module.exports.deleteUser = async (req, res) => {
 
     try {
         await User.deleteOne({ _id: id });
-
         res.clearCookie('token');
         res.sendStatus(200);
     } catch (error) {
@@ -99,8 +94,7 @@ module.exports.blockUser = async (req, res) => {
     const userId = req.tokenData.id;
 
     try {
-        await User.updateOne({ _id: userId }, { $addToSet: { banList: blockUserId } });
-
+        await User.updateOne({ _id: userId }, { $addToSet: { banList: ObjectId(blockUserId) } });
         res.sendStatus(200);
     } catch (error) {
         res.status(500).json(error);
@@ -112,8 +106,7 @@ module.exports.unBlockUser = async (req, res) => {
     const userId = req.tokenData.id;
 
     try {
-        await User.updateOne({ _id: userId }, { $pull: { banList: unBlockUserId } });
-
+        await User.updateOne({ _id: userId }, { $pull: { banList: ObjectId(unBlockUserId) } });
         res.sendStatus(200);
     } catch (error) {
         res.status(500).json(error);

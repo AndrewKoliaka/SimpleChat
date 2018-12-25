@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const messageSchema = mongoose.Schema({
+const messageSchema = Schema({
     userId: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     },
     roomId: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Room'
     },
     text: {
         type: String,
@@ -15,7 +18,7 @@ const messageSchema = mongoose.Schema({
     },
     timestamp: {
         type: Date,
-        required: true
+        default: Date.now
     }
 });
 
