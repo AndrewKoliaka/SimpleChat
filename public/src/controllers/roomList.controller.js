@@ -5,10 +5,10 @@ app.controller('roomList.controller', function ($scope, $state, $roomData, $erro
             isSpinner: false
         };
 
-        this.loadRooms();
+        this._loadRooms();
     };
 
-    this.loadRooms = () => {
+    this._loadRooms = () => {
         $scope.roomList.isSpinner = true;
 
         $roomData.getRooms()
@@ -22,17 +22,19 @@ app.controller('roomList.controller', function ($scope, $state, $roomData, $erro
     this.renameRoom = room => {
         const newRoomName = prompt('Please enter new name', 'My chat');
 
-        if (newRoomName) {
-            const updateData = { ...room, name: newRoomName };
+        if (!newRoomName) return;
 
-            $roomData.update(room._id, updateData)
-                .then(this.loadRooms)
-                .catch($errorAlert.show);
-        }
+        const updateData = { ...room, name: newRoomName };
+
+        $roomData.update(room._id, updateData)
+            .then(this._loadRooms)
+            .catch($errorAlert.show);
     };
 
     this.deleteRoom = id =>
         $roomData.delete(id)
-        .then(this.loadRooms)
+        .then(this._loadRooms)
         .catch($errorAlert.show);
+
+    this.openRoom = roomId => $state.go('room', { roomId });
 });

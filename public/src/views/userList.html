@@ -14,7 +14,7 @@
             <li class="columns" data-ng-repeat="user in userList.users">
                 <span class="column col-7">{{ ::user.name }}</span>
                 <span class="column col-5 text-right">
-                    <button class="btn">Start messaging</button>
+                    <button class="btn" data-ng-click="userListCtrl.createRoom(user._id)">Start messaging</button>
                     <button class="btn btn-link tooltip" data-tooltip="Block user" data-ng-if="!userListCtrl.checkIsBlocked(user._id)" data-ng-click="userListCtrl.blockUser(user._id)">
                         <i class="icon icon-stop text-error"></i>
                     </button>

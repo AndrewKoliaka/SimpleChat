@@ -9,7 +9,7 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
             },
             isSpinner: false,
             userId: null
-        }
+        };
 
         $scope.auth.userId = $authData.getUserId();
     }
@@ -32,10 +32,7 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
 
         this._showSpinner();
         $authData.login($scope.auth.data)
-            .then(() => {
-                $scope.auth.userId = $authData.getUserId();
-                $state.go('rooms', { userId: $scope.auth.userId })
-            })
+            .then(() => $state.go('rooms'))
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
     }
@@ -49,10 +46,7 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
 
         this._showSpinner();
         $authData.register($scope.auth.data)
-            .then(() => {
-                $scope.auth.userId = $authData.getUserId();
-                $state.go('rooms', { userId: $scope.auth.userId })
-            })
+            .then(() => $state.go('rooms'))
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
     }

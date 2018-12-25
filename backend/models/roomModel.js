@@ -7,7 +7,7 @@ const roomSchema = mongoose.Schema({
     },
     participants: {
         type: Array,
-        default: []
+        required: true
     },
     dateCreated: {
         type: Date,
