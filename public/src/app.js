@@ -1,4 +1,4 @@
-var app = angular.module('chatApp', ['ui.router', 'ngResource', 'ngCookies']);
+const app = angular.module('chatApp', ['ui.router', 'ngResource', 'ngCookies']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -51,14 +51,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'roomList.controller',
             controllerAs: 'roomListCtrl',
             onEnter: this._redirectIfNotAuthorized
-		})
-		.state('room', {
-			url: '/rooms/{roomId}',
-			templateUrl: 'views/room.html',
-			controller: 'room.controller',
-			controllerAs: 'roomCtrl',
-			onEnter: this._redirectIfNotAuthorized
-		});
+        })
+        .state('room', {
+            url: '/rooms/{roomId}',
+            templateUrl: 'views/room.html',
+            controller: 'room.controller',
+            controllerAs: 'roomCtrl',
+            onEnter: this._redirectIfNotAuthorized
+        });
 
     $urlRouterProvider.otherwise('/login');
 });

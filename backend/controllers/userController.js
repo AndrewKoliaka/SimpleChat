@@ -15,12 +15,12 @@ module.exports.loginUser = async (req, res) => {
             res.cookie('token', token);
             res.sendStatus(200);
         } else {
-            res.status(404).json({ info: "User not found" });
+            res.status(404).json({ info: 'User not found' });
         }
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
 
 module.exports.registerUser = async (req, res) => {
     const { name, email, password } = req.body;
@@ -28,7 +28,7 @@ module.exports.registerUser = async (req, res) => {
     try {
         const existingUser = await User.findOne({ email });
 
-        if (existingUser) return res.status(409).json({ info: "User exists" });
+        if (existingUser) return res.status(409).json({ info: 'User exists' });
         const createdUser = await User.create({ name, email, password });
         const tokenData = { id: createdUser._id, name: createdUser.name, email: createdUser.email };
         const token = await jwtUtils.sign(tokenData);
@@ -38,7 +38,7 @@ module.exports.registerUser = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
 
 module.exports.getUserList = async (req, res) => {
     const { id } = req.tokenData;
@@ -59,7 +59,7 @@ module.exports.getUserList = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
 
 module.exports.updateUser = async (req, res) => {
     const { name } = req.body;
@@ -75,7 +75,7 @@ module.exports.updateUser = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
 
 module.exports.deleteUser = async (req, res) => {
     const { id } = req.params;
@@ -87,7 +87,7 @@ module.exports.deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
 
 module.exports.blockUser = async (req, res) => {
     const blockUserId = req.params.id;
@@ -99,7 +99,7 @@ module.exports.blockUser = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};
 
 module.exports.unBlockUser = async (req, res) => {
     const unBlockUserId = req.params.id;
@@ -111,4 +111,4 @@ module.exports.unBlockUser = async (req, res) => {
     } catch (error) {
         res.status(500).json(error);
     }
-}
+};

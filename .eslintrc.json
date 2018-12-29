@@ -1,0 +1,21 @@
+{
+    "extends": "standard",
+    "globals": {
+        "angular": true,
+        "app": true,
+        "alert": true,
+        "prompt": true,
+        "confirm": true
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "semi": ["error", "always"],
+        "no-console": "error",
+        "no-unreachable": "error",
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*"},
+            { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"]}
+        ]
+    }
+}

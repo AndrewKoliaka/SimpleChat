@@ -38,5 +38,5 @@ app.service('$authData', function ($data, $cookies, $q) {
         }
 
         return deferred.promise;
-    }
+    };
 });

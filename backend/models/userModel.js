@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = Schema({
-	name: {
+    name: {
         type: String,
         default: 'user'
     },
@@ -10,17 +10,17 @@ const userSchema = Schema({
         type: String,
         data: Buffer
     },
-	email: {
-		type: String,
-		required: true
-	},
-	password: {
-		type: String,
-		required: true
-	},
-	banList: [{
-		type: Schema.Types.ObjectId
-	}]
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    banList: [{
+        type: Schema.Types.ObjectId
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);

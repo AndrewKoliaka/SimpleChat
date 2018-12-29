@@ -12,7 +12,7 @@ app.controller('roomList.controller', function ($scope, $state, $roomData, $erro
         $scope.roomList.isSpinner = true;
 
         $roomData.getRooms()
-            .then(({ data }) => { $scope.roomList.rooms = data })
+            .then(({ data }) => { $scope.roomList.rooms = data; })
             .catch($errorAlert.show)
             .finally(() => { $scope.roomList.isSpinner = false; });
     };
@@ -31,8 +31,7 @@ app.controller('roomList.controller', function ($scope, $state, $roomData, $erro
             .catch($errorAlert.show);
     };
 
-    this.deleteRoom = id =>
-        $roomData.delete(id)
+    this.deleteRoom = id => $roomData.delete(id)
         .then(this._loadRooms)
         .catch($errorAlert.show);
 

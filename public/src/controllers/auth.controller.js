@@ -12,15 +12,15 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
         };
 
         $scope.auth.userId = $authData.getUserId();
-    }
+    };
 
     this._showSpinner = () => {
         $scope.auth.isSpinner = true;
-    }
+    };
 
     this._hideSpinner = () => {
         $scope.auth.isSpinner = false;
-    }
+    };
 
     this.checkIsLogged = () => $authData.isLogged();
 
@@ -35,7 +35,7 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
             .then(() => $state.go('rooms'))
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
-    }
+    };
 
     this.register = () => {
         if (
@@ -49,11 +49,11 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
             .then(() => $state.go('rooms'))
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
-    }
+    };
 
     this.signOut = () => {
         $authData.signOut()
             .then(() => $state.go('login'))
             .catch($errorAlert.show);
-    }
+    };
 });

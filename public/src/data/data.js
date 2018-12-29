@@ -1,5 +1,4 @@
 app.service('$data', function ($resource, $api) {
-
     this.user = $resource(null, {}, {
         login: {
             url: $api.login,

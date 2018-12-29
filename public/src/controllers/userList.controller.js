@@ -23,13 +23,11 @@ app.controller('userList.controller', function ($scope, $userData, $errorAlert, 
 
     this.checkIsBlocked = id => $scope.userList.banList.includes(id);
 
-    this.blockUser = id =>
-        $userData.blockUser(id)
+    this.blockUser = id => $userData.blockUser(id)
         .then(this._getUsers)
         .catch($errorAlert.show);
 
-    this.unBlockUser = id =>
-        $userData.unBlockUser(id)
+    this.unBlockUser = id => $userData.unBlockUser(id)
         .then(this._getUsers)
         .catch($errorAlert.show);
 

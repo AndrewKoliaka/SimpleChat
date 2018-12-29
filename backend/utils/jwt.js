@@ -7,7 +7,7 @@ module.exports.sign = async data => {
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 module.exports.verify = async token => {
     try {
@@ -15,6 +15,6 @@ module.exports.verify = async token => {
     } catch (error) {
         throw new Error(error);
     }
-}
+};
 
 module.exports.decode = token => jwt.decode(token, { complete: true });

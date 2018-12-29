@@ -12,7 +12,7 @@ module.exports.getRoomsList = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-}
+};
 
 module.exports.getRoom = async (req, res) => {
     const { id } = req.params;
@@ -25,7 +25,7 @@ module.exports.getRoom = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-}
+};
 
 module.exports.createRoom = async (req, res) => {
     const { name, participants } = req.body;
@@ -41,7 +41,7 @@ module.exports.createRoom = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-}
+};
 
 module.exports.updateRoom = async (req, res) => {
     const { name, participants } = req.body;
@@ -53,7 +53,7 @@ module.exports.updateRoom = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-}
+};
 
 module.exports.deleteRoom = async (req, res) => {
     const { id } = req.params;
@@ -64,7 +64,7 @@ module.exports.deleteRoom = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-}
+};
 
 module.exports.getHistory = async (req, res) => {
     const { id } = req.query;
@@ -76,4 +76,4 @@ module.exports.getHistory = async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-}
+};

@@ -10,7 +10,7 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
         };
 
         $scope.profile.data = $authData.decodeToken().payload;
-    }
+    };
 
     this.enterUserName = () => {
         const newUserName = prompt('Please enter your new name', 'Harry Potter');
@@ -18,7 +18,7 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
         if (newUserName) {
             $scope.profile.data.name = newUserName;
         }
-    }
+    };
 
     this.updateUserData = () => {
         const { id, name } = $scope.profile.data;
@@ -26,8 +26,8 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
         $scope.profile.isSpinner = true;
 
         $profileData.updateUser(id, { name })
-            .finally(() => { $scope.profile.isSpinner = false });
-    }
+            .finally(() => { $scope.profile.isSpinner = false; });
+    };
 
     this.deleteAccount = () => {
         const isConfirm = confirm('Are sure? You will not be able to revert this change');
@@ -39,5 +39,5 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
                     $state.go('register');
                 });
         }
-    }
+    };
 });
