@@ -1,5 +1,5 @@
 # SimpleChat
-Simple chat app implemented with AngularJS, ExpressJS, WebSockets, MongoDB
+Simple chat app implemented with AngularJS, ExpressJS, Socket.IO, MongoDB
 
 ### Setup
 1. Install mongodb from [https://www.mongodb.com/](https://www.mongodb.com/)

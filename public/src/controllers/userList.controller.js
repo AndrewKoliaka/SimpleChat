@@ -1,4 +1,4 @@
-app.controller('userList.controller', function ($scope, $userData, $roomData, $authData, $state, $rootScope) {
+app.controller('userList.controller', function ($scope, $userData, $roomData, $authData, $state) {
     this.$onInit = () => {
         $scope.userList = {
             users: [],
