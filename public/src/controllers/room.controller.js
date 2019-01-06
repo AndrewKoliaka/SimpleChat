@@ -3,7 +3,6 @@ app.controller('room.controller', function ($scope, $state, $roomData, $errorAle
         $scope.room = {
             userId: $authData.getUserId(),
             data: null,
-            isSpinner: false,
             isTyping: false,
             message: '',
             history: []
@@ -26,23 +25,11 @@ app.controller('room.controller', function ($scope, $state, $roomData, $errorAle
         $socket.on($socketEvents.ERROR, $errorAlert.show);
     };
 
-    this._getRoomData = roomId => {
-        $scope.room.isSpinner = true;
+    this._getRoomData = roomId => $roomData.getRoom(roomId)
+        .then(({ data }) => { $scope.room.data = data; });
 
-        $roomData.getRoom(roomId)
-            .then(({ data }) => { $scope.room.data = data; })
-            .catch($errorAlert.show)
-            .finally(() => { $scope.room.isSpinner = false; });
-    };
-
-    this._getHistory = roomId => {
-        $scope.room.isSpinner = true;
-
-        $roomData.getHistory(roomId)
-            .then(({ data }) => { $scope.room.history = data; })
-            .catch($errorAlert.show)
-            .finally(() => { $scope.room.isSpinner = false; });
-    };
+    this._getHistory = roomId => $roomData.getHistory(roomId)
+        .then(({ data }) => { $scope.room.history = data; });
 
     this.sendMessage = () => {
         if (!$scope.room.message) return;

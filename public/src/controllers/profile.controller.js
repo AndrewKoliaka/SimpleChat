@@ -1,12 +1,11 @@
-app.controller('profile.controller', function ($scope, $profileData, $authData, $state, $errorAlert) {
+app.controller('profile.controller', function ($scope, $profileData, $authData, $state) {
     this.$onInit = () => {
         $scope.profile = {
             data: {
                 id: null,
                 name: null,
                 email: null
-            },
-            isSpinner: false
+            }
         };
 
         $scope.profile.data = $authData.decodeToken().payload;
@@ -23,11 +22,7 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
     this.updateUserData = () => {
         const { id, name } = $scope.profile.data;
 
-        $scope.profile.isSpinner = true;
-
-        $profileData.updateUser(id, { name })
-            .catch($errorAlert.show)
-            .finally(() => { $scope.profile.isSpinner = false; });
+        $profileData.updateUser(id, { name });
     };
 
     this.deleteAccount = () => {
@@ -39,7 +34,6 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
             .then(() => {
                 $authData.signOut();
                 $state.go('register');
-            })
-            .catch($errorAlert.show);
+            });
     };
 });

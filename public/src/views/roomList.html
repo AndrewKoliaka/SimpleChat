@@ -11,9 +11,9 @@
             <button class="btn btn-success" data-ng-click="roomListCtrl.createRoom()">Create chat</button>
         </div>
 
-        <div class="loading loading-lg text-center" data-ng-if="roomList.isSpinner"></div>
+        <div class="loading loading-lg text-center" data-ng-if="isLoading"></div>
 
-        <ul class="col-6 col-mx-auto" data-ng-if="roomList.rooms.length && !roomList.isSpinner">
+        <ul class="col-6 col-mx-auto" data-ng-if="roomList.rooms.length && !isLoading">
             <li class="columns" data-ng-repeat="room in roomList.rooms">
                 <span class="column col-7">{{ ::room.name }}</span>
                 <span class="column col-5 text-right">
@@ -33,7 +33,7 @@
             </li>
         </ul>
 
-        <div class="text-center" data-ng-if="!roomList.rooms.length && !roomList.isSpinner">
+        <div class="text-center" data-ng-if="!roomList.rooms.length && !isLoading">
             Your don't have any chats yet
         </div>
     </div>

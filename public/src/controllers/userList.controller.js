@@ -1,35 +1,26 @@
-app.controller('userList.controller', function ($scope, $userData, $errorAlert, $roomData, $authData, $state) {
+app.controller('userList.controller', function ($scope, $userData, $roomData, $authData, $state, $rootScope) {
     this.$onInit = () => {
         $scope.userList = {
             users: [],
-            banList: [],
-            isSpinner: false
+            banList: []
         };
 
         this._getUsers();
     };
 
-    this._getUsers = () => {
-        $scope.userList.isSpinner = true;
-
-        $userData.getUserList()
-            .then(({ data }) => {
-                $scope.userList.users = data.userList;
-                $scope.userList.banList = data.banList;
-            })
-            .catch($errorAlert.show)
-            .finally(() => { $scope.userList.isSpinner = false; });
-    };
+    this._getUsers = () => $userData.getUserList()
+        .then(({ data }) => {
+            $scope.userList.users = data.userList;
+            $scope.userList.banList = data.banList;
+        });
 
     this.checkIsBlocked = id => $scope.userList.banList.includes(id);
 
     this.blockUser = id => $userData.blockUser(id)
-        .then(this._getUsers)
-        .catch($errorAlert.show);
+        .then(this._getUsers);
 
     this.unBlockUser = id => $userData.unBlockUser(id)
-        .then(this._getUsers)
-        .catch($errorAlert.show);
+        .then(this._getUsers);
 
     this.createRoom = interlocutorId => {
         const roomName = prompt('Enter chat name', 'Super chat 1');
@@ -44,7 +35,6 @@ app.controller('userList.controller', function ($scope, $userData, $errorAlert, 
                 const roomId = data._id;
 
                 $state.go('room', { roomId });
-            })
-            .catch($errorAlert.show);
+            });
     };
 });

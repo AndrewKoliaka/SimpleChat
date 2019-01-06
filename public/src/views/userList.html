@@ -8,9 +8,9 @@
             <br> -->
         <div class="divider"></div>
 
-        <div class="loading loading-lg text-center" data-ng-if="userList.isSpinner"></div>
+        <div class="loading loading-lg text-center" data-ng-if="isLoading"></div>
 
-        <ul class="col-6 col-mx-auto" data-ng-if="!userList.isSpinner">
+        <ul class="col-6 col-mx-auto" data-ng-if="!isLoading">
             <li class="columns" data-ng-repeat="user in userList.users">
                 <span class="column col-7">{{ ::user.name }}</span>
                 <span class="column col-5 text-right">

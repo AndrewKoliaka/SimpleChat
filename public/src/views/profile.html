@@ -33,9 +33,9 @@
         </div>
         <footer class="panel-footer">
             <button class="btn btn-primary btn-block"
-                data-ng-if="!profile.isSpinner"
+                data-ng-if="!isLoading"
                 data-ng-click="profileCtrl.updateUserData()">Save</button>
-            <div class="loading loading-lg" data-ng-if="profile.isSpinner"></div>
+            <div class="loading loading-lg" data-ng-if="isLoading"></div>
         </footer>
     </div>
 </section>
