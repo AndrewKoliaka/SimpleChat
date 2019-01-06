@@ -23,8 +23,7 @@ const pathTo = {
             index: 'public/index.html'
         },
         backend: {
-            js: 'backend/**/*.js',
-            server: './server.js'
+            js: 'backend/**/*.js'
         }
     },
     libs: {
@@ -37,7 +36,8 @@ const pathTo = {
             'node_modules/angular/angular.min.js',
             'node_modules/angular-ui-router/release/angular-ui-router.min.js',
             'node_modules/angular-resource/angular-resource.min.js',
-            'node_modules/angular-cookies/angular-cookies.min.js'
+            'node_modules/angular-cookies/angular-cookies.min.js',
+            'node_modules/socket.io-client/dist/socket.io.js'
         ]
     }
 };

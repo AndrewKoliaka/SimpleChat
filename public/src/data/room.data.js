@@ -4,4 +4,5 @@ app.service('$roomData', function ($data) {
     this.create = roomData => $data.room.create(roomData).$promise;
     this.update = (id, roomData = {}) => $data.room.update({ id }, roomData).$promise;
     this.delete = id => $data.room.delete({ id }).$promise;
+    this.getHistory = id => $data.room.getHistory({ id }).$promise;
 });

@@ -5,7 +5,8 @@
         "app": true,
         "alert": true,
         "prompt": true,
-        "confirm": true
+        "confirm": true,
+        "io": true
     },
     "rules": {
         "indent": ["error", 4],

@@ -1,19 +1,12 @@
 const Message = require('../models/messageModel');
 
-module.exports.postMessage = async (req, res) => {
-    try {
-        await Message.create(req.body);
-        res.sendStatus(200);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
-
 module.exports.updateMessage = async (req, res) => {
-    const { id, userId, roomId, text, timestamp = Date.now() } = req.body;
+    const { roomId, text, timestamp = Date.now() } = req.body;
+    const { id } = req.params;
+    const userId = req.tokenData.id;
 
     try {
-        await Message.findOneAndUpdate({ _id: id }, { $set: { userId, roomId, text, timestamp } });
+        await Message.updateOne({ _id: id }, { userId, roomId, text, timestamp });
         res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error);
@@ -21,10 +14,10 @@ module.exports.updateMessage = async (req, res) => {
 };
 
 module.exports.deleteMessage = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try {
-        await Message.findOneAndDelete({ _id: id });
+        await Message.deleteOne({ _id: id });
         res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error);

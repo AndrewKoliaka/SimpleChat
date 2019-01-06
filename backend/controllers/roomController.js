@@ -67,12 +67,21 @@ module.exports.deleteRoom = async (req, res) => {
 };
 
 module.exports.getHistory = async (req, res) => {
-    const { id } = req.query;
+    const { id } = req.params;
 
     try {
-        const messages = await Message.find({ roomId: id });
+        const messages = await Message.find({ roomId: id })
+            .populate('userId', ['name']);
 
-        res.status(200).json(messages);
+        const data = messages.map(msgItem => ({
+            _id: msgItem._id,
+            roomId: msgItem.roomId,
+            text: msgItem.text,
+            timestamp: msgItem.timestamp,
+            user: msgItem.userId
+        }));
+
+        res.status(200).json({ data });
     } catch (error) {
         res.status(500).send(error);
     }

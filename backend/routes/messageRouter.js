@@ -1,12 +1,11 @@
 const express = require('express');
 const messageController = require('../controllers/messageController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const httpAuthMiddleware = require('../middlewares/httpAuthMiddleware');
 
 const router = express.Router();
 
-router.use(authMiddleware);
+router.use(httpAuthMiddleware);
 
-router.post('/', messageController.postMessage);
 router.put('/:id', messageController.updateMessage);
 router.delete('/:id', messageController.deleteMessage);
 
