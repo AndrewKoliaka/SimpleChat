@@ -1,7 +1,6 @@
 const app = angular.module('chatApp', ['ui.router', 'ngResource', 'ngCookies']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-
     this._redirectIfNotAuthorized = ($timeout, $authData, $state) => {
         if (!$authData.isLogged()) {
             $timeout(() => {

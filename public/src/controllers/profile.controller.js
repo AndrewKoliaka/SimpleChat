@@ -1,4 +1,4 @@
-app.controller('profile.controller', function ($scope, $profileData, $authData, $state) {
+app.controller('profile.controller', function ($scope, $profileData, $authData, $state, $errorAlert) {
     this.$onInit = () => {
         $scope.profile = {
             data: {
@@ -26,18 +26,20 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
         $scope.profile.isSpinner = true;
 
         $profileData.updateUser(id, { name })
+            .catch($errorAlert.show)
             .finally(() => { $scope.profile.isSpinner = false; });
     };
 
     this.deleteAccount = () => {
         const isConfirm = confirm('Are sure? You will not be able to revert this change');
 
-        if (isConfirm) {
-            $profileData.deleteUser($scope.profile.data.id)
-                .then(() => {
-                    $authData.signOut();
-                    $state.go('register');
-                });
-        }
+        if (!isConfirm) return;
+
+        $profileData.deleteUser($scope.profile.data.id)
+            .then(() => {
+                $authData.signOut();
+                $state.go('register');
+            })
+            .catch($errorAlert.show);
     };
 });

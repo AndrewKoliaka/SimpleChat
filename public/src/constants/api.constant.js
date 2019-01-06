@@ -15,7 +15,6 @@ app.constant('$api', {
     deleteRoom: '/api/rooms/:id',
     getMessages: '/api/rooms/:id/messages',
 
-    postMessage: '/api/messages',
     updateMessage: '/api/messages/:id',
     deleteMessage: '/api/messages/:id'
 });

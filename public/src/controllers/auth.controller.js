@@ -32,7 +32,10 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
 
         this._showSpinner();
         $authData.login($scope.auth.data)
-            .then(() => $state.go('rooms'))
+            .then(() => {
+                $scope.auth.userId = $authData.getUserId();
+                $state.go('rooms');
+            })
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
     };
@@ -46,7 +49,10 @@ app.controller('auth.controller', function ($scope, $errorAlert, $authData, $sta
 
         this._showSpinner();
         $authData.register($scope.auth.data)
-            .then(() => $state.go('rooms'))
+            .then(() => {
+                $scope.auth.userId = $authData.getUserId();
+                $state.go('rooms');
+            })
             .catch($errorAlert.show)
             .finally(this._hideSpinner);
     };

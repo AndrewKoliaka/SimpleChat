@@ -62,19 +62,15 @@ app.service('$data', function ($resource, $api) {
             url: $api.deleteRoom,
             method: 'DELETE',
             params: { id: '@id' }
+        },
+        getHistory: {
+            url: $api.getMessages,
+            method: 'GET',
+            params: { id: '@id' }
         }
     });
 
     this.message = $resource(null, {}, {
-        getConversation: {
-            url: $api.getMessages,
-            method: 'GET',
-            params: { id: '@roomId' }
-        },
-        post: {
-            url: $api.postMessage,
-            method: 'POST'
-        },
         update: {
             url: $api.updateMessage,
             method: 'PUT',

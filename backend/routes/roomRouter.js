@@ -1,10 +1,10 @@
 const express = require('express');
 const roomController = require('../controllers/roomController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const httpAuthMiddleware = require('../middlewares/httpAuthMiddleware');
 
 const router = express.Router();
 
-router.use(authMiddleware);
+router.use(httpAuthMiddleware);
 
 router.get('/', roomController.getRoomsList);
 router.get('/:id', roomController.getRoom);
