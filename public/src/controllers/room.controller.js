@@ -1,9 +1,13 @@
-app.controller('room.controller', function ($scope, $state, $roomData, $errorAlert, $socket, $authData, $socketEvents) {
+app.controller('room.controller', function (
+    $scope, $state, $errorAlert, $anchorScroll,
+    $roomData, $authData, $messageData,
+    $socket, $socketEvents) {
     this.$onInit = () => {
         $scope.room = {
             userId: $authData.getUserId(),
             data: null,
             isTyping: false,
+            editingMessageId: null,
             message: '',
             history: []
         };
@@ -31,6 +35,11 @@ app.controller('room.controller', function ($scope, $state, $roomData, $errorAle
     this._getHistory = roomId => $roomData.getHistory(roomId)
         .then(({ data }) => { $scope.room.history = data; });
 
+    this._onMessageUpdated = () => {
+        this._getHistory($state.params.roomId);
+        $scope.room.editingMessageId = null;
+    };
+
     this.sendMessage = () => {
         if (!$scope.room.message) return;
 
@@ -39,11 +48,27 @@ app.controller('room.controller', function ($scope, $state, $roomData, $errorAle
             text: $scope.room.message
         };
 
-        $socket.emit($socketEvents.MESSAGE, messageData);
+        if ($scope.room.editingMessageId) {
+            $messageData.updateMessage($scope.room.editingMessageId, messageData)
+                .then(this._onMessageUpdated);
+        } else {
+            $socket.emit($socketEvents.MESSAGE, messageData);
+        }
+
         $scope.room.message = '';
     };
 
     this.onTypeMessage = () => $socket.emit($socketEvents.MESSAGE_IS_TYPING, $scope.room.message);
 
-    this.checkIsMe = id => id === $scope.room.userId;
+    this.checkIsMe = userId => userId === $scope.room.userId;
+
+    this.scrollToLastMessage = () => $anchorScroll('lastMessage');
+
+    this.editMessage = message => {
+        $scope.room.editingMessageId = message._id;
+        $scope.room.message = message.text;
+    };
+
+    this.deleteMessage = messageId => $messageData.deleteMessage(messageId)
+        .then(this._getHistory($state.params.roomId));
 });

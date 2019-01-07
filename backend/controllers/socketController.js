@@ -8,11 +8,12 @@ async function onMessage (data, cb) {
     const userId = this.tokenData.id;
 
     try {
-        await Message.create({ roomId, userId, text });
+        const createdMessage = await Message.create({ roomId, userId, text });
         const eventData = {
+            _id: createdMessage._id,
+            user: { name },
             roomId,
-            text,
-            user: { name }
+            text
         };
 
         liveClients.forEach(client => client.emit(socketEvents.MESSAGE, eventData));

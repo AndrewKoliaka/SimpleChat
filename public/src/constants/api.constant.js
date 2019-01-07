@@ -2,7 +2,6 @@ app.constant('$api', {
     getUsers: '/api/users',
     login: '/api/users/login',
     register: '/api/users/register',
-    getUser: '/api/users/:id',
     updateUser: '/api/users/:id',
     deleteUser: '/api/users/:id',
     blockUser: '/api/users/:id/block',

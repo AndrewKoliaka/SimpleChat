@@ -8,11 +8,6 @@ app.service('$data', function ($resource, $api) {
             url: $api.register,
             method: 'POST'
         },
-        getOne: {
-            url: $api.getUser,
-            method: 'GET',
-            params: { id: '@id' }
-        },
         getAll: {
             url: $api.getUsers,
             method: 'GET'

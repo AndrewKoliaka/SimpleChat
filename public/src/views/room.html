@@ -14,15 +14,39 @@
 
     <div class="column col-8 col-mx-auto bg-gray" style="margin-bottom: 110px;">
         <div class="loading loading-lg text-center" data-ng-if="isLoading"></div>
-        <ul data-ng-if="!isLoading">
-            <li data-ng-class="{ 'text-right': roomCtrl.checkIsMe(message.user._id) }"
-                data-ng-repeat="message in room.history">
-                <span class="text-bold">{{ message.user.name }}</span>
-                <p>{{ message.text }}</p>
+        <ul data-ng-if="!isLoading" style="margin: 20px;">
+            <li data-ng-repeat="message in room.history"
+                data-ng-init="isMe = roomCtrl.checkIsMe(message.user._id);"
+                data-ng-class="{ 'text-right': isMe }"
+                style="list-style-type: none;">
+
+                <span data-ng-if="$last"
+                    data-ng-init="roomCtrl.scrollToLastMessage()"
+                    id="lastMessage"></span>
+
+                <div class="column"
+                    data-ng-class="{ 'popover popover-left': isMe }">
+                    <span>
+                        <span class="text-bold">{{ message.user.name }}</span>
+                        <pre style="margin: 0;">{{ message.text }}</pre>
+                    </span>
+                    <div data-ng-if="isMe"
+                        class="popover-container bg-dark"
+                        style="width: auto; display: flex;">
+                        <button class="btn btn-link"
+                            data-ng-click="roomCtrl.editMessage(message)">
+                            <i class="icon icon-edit text-warning"></i>
+                        </button>
+                        <button class="btn btn-link"
+                            data-ng-click="roomCtrl.deleteMessage(message._id)">
+                            <i class="icon icon-delete text-error"></i>
+                        </button>
+                    </div>
+                </div>
+
             </li>
         </ul>
         <em data-ng-if="room.isTyping">Someone is typing a message...</em>
-        <br>
     </div>
 
     <div class="message-form column col-8 col-mx-auto">
@@ -37,7 +61,7 @@
                         rows="3"></textarea>
                 </span>
                 <span class="col-1 text-center">
-                    <button class="btn btn-lg btn-primary" data-ng-click="roomCtrl.sendMessage()">Send</button>
+                    <button class="btn btn-lg btn-primary" data-ng-click="roomCtrl.sendMessage()">{{ room.editingMessageId ? 'Update': 'Send' }}</button>
                 </span>
             </div>
         </form>
