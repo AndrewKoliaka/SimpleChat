@@ -22,7 +22,8 @@
 
                 <span data-ng-if="$last"
                     data-ng-init="roomCtrl.scrollToLastMessage()"
-                    id="lastMessage"></span>
+                    id="lastMessage">
+                </span>
 
                 <div class="column"
                     data-ng-class="{ 'popover popover-left': isMe }">
@@ -66,4 +67,6 @@
             </div>
         </form>
     </div>
+
+    <div data-scroll-top></div>
 </section>
