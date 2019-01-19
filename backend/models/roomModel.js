@@ -10,6 +10,11 @@ const roomSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
+    adminId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     dateCreated: {
         type: Date,
         default: Date.now

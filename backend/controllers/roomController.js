@@ -29,11 +29,13 @@ module.exports.getRoom = async (req, res) => {
 
 module.exports.createRoom = async (req, res) => {
     const { name, participants } = req.body;
+    const { id } = req.tokenData;
 
     try {
         const roomData = {
             name,
-            participants: participants.map(id => ObjectId(id))
+            participants: participants.map(id => ObjectId(id)),
+            adminId: id
         };
         const createdRoom = await Room.create(roomData);
 
@@ -82,6 +84,18 @@ module.exports.getHistory = async (req, res) => {
         }));
 
         res.status(200).json({ data });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+module.exports.leaveRoom = async (req, res) => {
+    const roomId = req.params.id;
+    const participantId = req.tokenData.id;
+
+    try {
+        await Room.updateOne({ _id: roomId }, { $pull: { participants: ObjectId(participantId) } });
+        res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error);
     }
