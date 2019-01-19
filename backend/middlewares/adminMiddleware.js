@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
         if (room && ObjectId(room.adminId).equals(ObjectId(userId))) {
             next();
         } else {
-            res.status(404).json({ info: 'Forbidden' });
+            res.status(403).json({ info: 'Forbidden' });
         }
     } catch (error) {
         res.status(500).json(error);
