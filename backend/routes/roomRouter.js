@@ -12,7 +12,8 @@ router.get('/:id', roomController.getRoom);
 router.get('/:id/messages', roomController.getHistory);
 router.post('/', roomController.createRoom);
 router.put('/:id', adminMiddleware, roomController.updateRoom);
-router.put('/:id/leave', roomController.leaveRoom);
 router.delete('/:id', adminMiddleware, roomController.deleteRoom);
+router.put('/:id/leave', roomController.leaveRoom);
+router.put('/:id/add', adminMiddleware, roomController.addParticipant);
 
 module.exports = router;

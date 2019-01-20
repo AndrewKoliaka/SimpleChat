@@ -7,7 +7,7 @@ module.exports.updateMessage = async (req, res) => {
 
     try {
         await Message.updateOne({ _id: id }, { userId, roomId, text, timestamp });
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -18,7 +18,7 @@ module.exports.deleteMessage = async (req, res) => {
 
     try {
         await Message.deleteOne({ _id: id });
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).send(error);
     }

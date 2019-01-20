@@ -11,7 +11,10 @@ async function onMessage (data, cb) {
         const createdMessage = await Message.create({ roomId, userId, text });
         const eventData = {
             _id: createdMessage._id,
-            user: { name },
+            user: {
+                _id: userId,
+                name
+            },
             roomId,
             text
         };

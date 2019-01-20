@@ -51,7 +51,7 @@ module.exports.updateRoom = async (req, res) => {
 
     try {
         await Room.updateOne({ _id: id }, { name, participants });
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -62,7 +62,7 @@ module.exports.deleteRoom = async (req, res) => {
 
     try {
         await Room.deleteOne({ _id: id });
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -89,13 +89,25 @@ module.exports.getHistory = async (req, res) => {
     }
 };
 
+module.exports.addParticipant = async (req, res) => {
+    const roomId = req.params.id;
+    const participantId = req.body.id;
+
+    try {
+        await Room.updateOne({ _id: roomId }, { $push: { participants: ObjectId(participantId) } });
+        res.sendStatus(204);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 module.exports.leaveRoom = async (req, res) => {
     const roomId = req.params.id;
     const participantId = req.tokenData.id;
 
     try {
         await Room.updateOne({ _id: roomId }, { $pull: { participants: ObjectId(participantId) } });
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).send(error);
     }

@@ -13,7 +13,7 @@ module.exports.loginUser = async (req, res) => {
             const token = await jwtUtils.sign(tokenData);
 
             res.cookie('token', token);
-            res.sendStatus(200);
+            res.sendStatus(204);
         } else {
             res.status(404).json({ info: 'User not found' });
         }
@@ -34,7 +34,7 @@ module.exports.registerUser = async (req, res) => {
         const token = await jwtUtils.sign(tokenData);
 
         res.cookie('token', token);
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -71,7 +71,7 @@ module.exports.updateUser = async (req, res) => {
         const newToken = await jwtUtils.sign(newTokenData);
 
         res.cookie('token', newToken);
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -83,7 +83,7 @@ module.exports.deleteUser = async (req, res) => {
     try {
         await User.deleteOne({ _id: id });
         res.clearCookie('token');
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -95,7 +95,7 @@ module.exports.blockUser = async (req, res) => {
 
     try {
         await User.updateOne({ _id: userId }, { $addToSet: { banList: ObjectId(blockUserId) } });
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -107,7 +107,7 @@ module.exports.unBlockUser = async (req, res) => {
 
     try {
         await User.updateOne({ _id: userId }, { $pull: { banList: ObjectId(unBlockUserId) } });
-        res.sendStatus(200);
+        res.sendStatus(204);
     } catch (error) {
         res.status(500).json(error);
     }
