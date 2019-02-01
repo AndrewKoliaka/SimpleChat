@@ -13,6 +13,7 @@ app.constant('$api', {
     updateRoom: '/api/rooms/:id',
     deleteRoom: '/api/rooms/:id',
     getMessages: '/api/rooms/:id/messages',
+    addParticipant: '/api/rooms/:id/add',
 
     updateMessage: '/api/messages/:id',
     deleteMessage: '/api/messages/:id'

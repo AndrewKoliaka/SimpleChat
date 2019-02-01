@@ -8,6 +8,13 @@
         <div class="text-center">
             Participants:
             <span class="chip" data-ng-repeat="participant in room.data.participants">{{ participant.name }}</span>
+            <span class="chip">
+                <button class="btn btn-link tooltip"
+                    data-tooltip="Add new member"
+                    data-ng-click="roomCtrl.openInvitePopup()">
+                    <i class="icon icon-plus text-dark"></i>
+                </button>
+            </span>
         </div>
         <div class="divider"></div>
     </div>
@@ -69,4 +76,16 @@
     </div>
 
     <div data-scroll-top></div>
+    <div data-popup="room.inviteUsersPopup">
+        <popup-title><h4>Select users to add</h4></popup-title>
+        <popup-body>
+            <div class="loading loading-lg text-center" data-ng-if="isLoading"></div>
+            <ul data-ng-if="!isLoading && room.inviteUsersList">
+                <li class="d-flex" style="justify-content: space-between;" data-ng-repeat="user in room.inviteUsersList">
+                    {{ ::user.name }}
+                    <button class="btn btn-primary" data-ng-click="roomCtrl.addParticipant(user._id)">Add</button>
+                </li>
+            </ul>
+        </popup-body>
+    </div>
 </section>
