@@ -14,20 +14,30 @@
         <div class="loading loading-lg text-center" data-ng-if="isLoading"></div>
 
         <ul class="col-6 col-mx-auto" data-ng-if="roomList.rooms.length && !isLoading">
-            <li class="columns" data-ng-repeat="room in roomList.rooms">
+            <li class="columns"
+                data-ng-repeat="room in roomList.rooms"
+                data-ng-init="isAdmin = room.adminId === roomList.userId">
                 <span class="column col-7">{{ ::room.name }}</span>
                 <span class="column col-5 text-right">
                     <button class="btn btn-link tooltip"
+                        data-ng-if="isAdmin"
                         data-tooltip="Rename"
                         data-ng-click="roomListCtrl.renameRoom(room)">
                         <i class="icon icon-edit text-warning"></i>
                     </button>
                     <button class="btn btn-link tooltip"
+                        data-ng-if="isAdmin"
                         data-tooltip="Delete"
                         data-ng-click="roomListCtrl.deleteRoom(room._id)">
                         <i class="icon icon-delete text-error"></i>
                     </button>
-                    <button class="btn" data-ng-click="roomListCtrl.openRoom(room._id)">Go to the chat</button>
+                    <button class="btn btn-link tooltip"
+                        data-ng-if="!isAdmin"
+                        data-tooltip="Leave"
+                        data-ng-click="roomListCtrl.leaveRoom(room._id)">
+                        <i class="icon icon-back text-error"></i>
+                    </button>
+                    <button class="btn" data-ng-click="roomListCtrl.openRoom(room._id)">Open chat</button>
                 </span>
 
             </li>

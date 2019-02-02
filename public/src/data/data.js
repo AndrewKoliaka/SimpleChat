@@ -58,6 +58,11 @@ app.service('$data', function ($resource, $api) {
             method: 'DELETE',
             params: { id: '@id' }
         },
+        leaveRoom: {
+            url: $api.leaveRoom,
+            method: 'PUT',
+            params: { id: '@id' }
+        },
         getHistory: {
             url: $api.getMessages,
             method: 'GET',

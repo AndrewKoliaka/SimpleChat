@@ -1,7 +1,8 @@
-app.controller('roomList.controller', function ($scope, $state, $roomData) {
+app.controller('roomList.controller', function ($scope, $state, $roomData, $authData) {
     this.$onInit = () => {
         $scope.roomList = {
-            rooms: []
+            rooms: [],
+            userId: $authData.getUserId()
         };
 
         this._loadRooms();
@@ -27,4 +28,7 @@ app.controller('roomList.controller', function ($scope, $state, $roomData) {
         .then(this._loadRooms);
 
     this.openRoom = roomId => $state.go('room', { roomId });
+
+    this.leaveRoom = roomId => $roomData.leaveRoom(roomId)
+        .then(this._loadRooms);
 });
