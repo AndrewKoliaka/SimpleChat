@@ -33,18 +33,24 @@ app.controller('room.controller', function (
         $socket.on($socketEvents.ERROR, $errorAlert.show);
     };
 
-    this._getRoomData = roomId => $roomData.getRoom(roomId)
-        .then(({ data }) => { $scope.room.data = data; });
+    this._getRoomData = async roomId => {
+        const { data } = await $roomData.getRoom(roomId);
 
-    this._getHistory = roomId => $roomData.getHistory(roomId)
-        .then(({ data }) => { $scope.room.history = data; });
+        $scope.room.data = data;
+    };
+
+    this._getHistory = async roomId => {
+        const { data } = await $roomData.getHistory(roomId);
+
+        $scope.room.history = data;
+    };
 
     this._onMessageUpdated = () => {
         this._getHistory($state.params.roomId);
         $scope.room.editingMessageId = null;
     };
 
-    this.sendMessage = () => {
+    this.sendMessage = async () => {
         if (!$scope.room.message) return;
 
         const messageData = {
@@ -53,8 +59,9 @@ app.controller('room.controller', function (
         };
 
         if ($scope.room.editingMessageId) {
-            $messageData.updateMessage($scope.room.editingMessageId, messageData)
-                .then(this._onMessageUpdated);
+            await $messageData.updateMessage($scope.room.editingMessageId, messageData);
+
+            this._onMessageUpdated();
         } else {
             $socket.emit($socketEvents.MESSAGE, messageData);
         }
@@ -73,8 +80,11 @@ app.controller('room.controller', function (
         $scope.room.message = message.text;
     };
 
-    this.deleteMessage = messageId => $messageData.deleteMessage(messageId)
-        .then(this._getHistory($state.params.roomId));
+    this.deleteMessage = async messageId => {
+        await $messageData.deleteMessage(messageId);
+
+        this._getHistory($state.params.roomId);
+    };
 
     this.openInvitePopup = () => {
         $scope.room.inviteUsersPopup.isActive = true;
@@ -82,23 +92,26 @@ app.controller('room.controller', function (
         this._getInviteUserList();
     };
 
-    this._getInviteUserList = () => $userData.getUserList()
-        .then(this._onInviteUserListLoaded);
+    this._getInviteUserList = async () => {
+        const { data } = await $userData.getUserList();
 
-    this._onInviteUserListLoaded = response => {
-        const { userList } = response.data;
+        this._onInviteUserListLoaded(data);
+    };
+
+    this._onInviteUserListLoaded = userList => {
         const { participants } = $scope.room.data;
         const participantsIds = participants.map(participantItem => participantItem._id);
 
         $scope.room.inviteUsersList = userList.filter(user => !participantsIds.includes(user._id));
     };
 
-    this.addParticipant = participantId => {
+    this.addParticipant = async participantId => {
         const roomId = $state.params.roomId;
         const data = { id: participantId };
 
-        $roomData.addParticipant(roomId, data)
-            .then(this._getRoomData)
-            .then(this._getInviteUserList);
+        await $roomData.addParticipant(roomId, data);
+        await this._getRoomData(roomId);
+
+        this._getInviteUserList();
     };
 });

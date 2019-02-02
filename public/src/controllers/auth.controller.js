@@ -15,33 +15,34 @@ app.controller('auth.controller', function ($scope, $authData, $state) {
 
     this.checkIsLogged = () => $authData.isLogged();
 
-    this.login = () => {
+    this.login = async () => {
         if (
             !$scope.auth.data.email ||
             !$scope.auth.data.password
         ) return;
 
-        $authData.login($scope.auth.data)
-            .then(() => {
-                $scope.auth.userId = $authData.getUserId();
-                $state.go('rooms');
-            });
+        await $authData.login($scope.auth.data);
+
+        $scope.auth.userId = $authData.getUserId();
+        $state.go('rooms');
     };
 
-    this.register = () => {
+    this.register = async () => {
         if (
             !$scope.auth.data.email ||
             !$scope.auth.data.password ||
             !$scope.auth.data.passwordRepeat
         ) return;
 
-        $authData.register($scope.auth.data)
-            .then(() => {
-                $scope.auth.userId = $authData.getUserId();
-                $state.go('rooms');
-            });
+        await $authData.register($scope.auth.data);
+
+        $scope.auth.userId = $authData.getUserId();
+        $state.go('rooms');
     };
 
-    this.signOut = () => $authData.signOut()
-        .then(() => $state.go('login'));
+    this.signOut = async () => {
+        await $authData.signOut();
+
+        $state.go('login');
+    };
 });

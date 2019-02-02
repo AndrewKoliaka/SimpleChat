@@ -8,27 +8,37 @@ app.controller('roomList.controller', function ($scope, $state, $roomData, $auth
         this._loadRooms();
     };
 
-    this._loadRooms = () => $roomData.getRooms()
-        .then(({ data }) => { $scope.roomList.rooms = data; });
+    this._loadRooms = async () => {
+        const { data } = await $roomData.getRooms();
+
+        $scope.roomList.rooms = data;
+    };
 
     this.createRoom = () => $state.go('users');
 
-    this.renameRoom = room => {
+    this.renameRoom = async room => {
         const newRoomName = prompt('Please enter new name', 'My chat');
 
         if (!newRoomName) return;
 
         const updateData = { ...room, name: newRoomName };
 
-        $roomData.update(room._id, updateData)
-            .then(this._loadRooms);
+        await $roomData.update(room._id, updateData);
+
+        this._loadRooms();
     };
 
-    this.deleteRoom = id => $roomData.delete(id)
-        .then(this._loadRooms);
+    this.deleteRoom = async id => {
+        await $roomData.delete(id);
+
+        this._loadRooms();
+    };
 
     this.openRoom = roomId => $state.go('room', { roomId });
 
-    this.leaveRoom = roomId => $roomData.leaveRoom(roomId)
-        .then(this._loadRooms);
+    this.leaveRoom = async roomId => {
+        await $roomData.leaveRoom(roomId);
+
+        this._loadRooms();
+    };
 });

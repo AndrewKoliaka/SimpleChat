@@ -25,15 +25,14 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
         $profileData.updateUser(id, { name });
     };
 
-    this.deleteAccount = () => {
+    this.deleteAccount = async () => {
         const isConfirm = confirm('Are sure? You will not be able to revert this change');
 
         if (!isConfirm) return;
 
-        $profileData.deleteUser($scope.profile.data.id)
-            .then(() => {
-                $authData.signOut();
-                $state.go('register');
-            });
+        await $profileData.deleteUser($scope.profile.data.id);
+
+        $authData.signOut();
+        $state.go('register');
     };
 });

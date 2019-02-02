@@ -1,4 +1,6 @@
-app.controller('userList.controller', function ($scope, $userData, $roomData, $authData, $state) {
+app.controller('userList.controller', function ($scope, $userData, $roomData, $authData, $state, $async) {
+
+
     this.$onInit = () => {
         $scope.userList = {
             users: [],
@@ -8,21 +10,30 @@ app.controller('userList.controller', function ($scope, $userData, $roomData, $a
         this._getUsers();
     };
 
-    this._getUsers = () => $userData.getUserList()
-        .then(({ data }) => {
-            $scope.userList.users = data.userList;
-            $scope.userList.banList = data.banList;
-        });
+    async function _getUsers () {
+        const { data } = await $userData.getUserList();
+
+        $scope.userList.users = data.userList;
+        $scope.userList.banList = data.banList;
+    };
+
+    this._getUsers = $async(_getUsers);
 
     this.checkIsBlocked = id => $scope.userList.banList.includes(id);
 
-    this.blockUser = id => $userData.blockUser(id)
-        .then(this._getUsers);
+    this.blockUser = async id => {
+        await $userData.blockUser(id);
 
-    this.unBlockUser = id => $userData.unBlockUser(id)
-        .then(this._getUsers);
+        this._getUsers();
+    };
 
-    this.createRoom = interlocutorId => {
+    this.unBlockUser = async id => {
+        await $userData.unBlockUser(id);
+
+        this._getUsers();
+    };
+
+    this.createRoom = async interlocutorId => {
         const roomName = prompt('Enter chat name', 'Super chat 1');
 
         if (!roomName || !interlocutorId) return;
@@ -30,11 +41,10 @@ app.controller('userList.controller', function ($scope, $userData, $roomData, $a
         const userId = $authData.getUserId();
         const roomData = { name: roomName, participants: [userId, interlocutorId] };
 
-        $roomData.create(roomData)
-            .then(({ data }) => {
-                const roomId = data._id;
+        const { data } = await $roomData.create(roomData);
 
-                $state.go('room', { roomId });
-            });
+        const roomId = data._id;
+
+        $state.go('room', { roomId });
     };
 });
