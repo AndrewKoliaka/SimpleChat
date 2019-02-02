@@ -9,8 +9,14 @@
             Participants:
             <span class="chip" data-ng-repeat="participant in room.data.participants">
                 {{ participant._id === room.data.adminId ? '*' : '' }} {{ ::participant.name }}
+                <a class="btn btn-clear"
+                    data-ng-if="roomCtrl.checkIsMeAdmin(room.data.adminId) && !roomCtrl.checkIsMe(participant._id)"
+                    data-ng-click="roomCtrl.removeParticipant(participant._id)"
+                    aria-label="Close"
+                    role="button"></a>
             </span>
-            <span class="chip">
+            <span class="chip"
+                data-ng-if="roomCtrl.checkIsMeAdmin(room.data.adminId)">
                 <button class="btn btn-link tooltip"
                     data-tooltip="Add new member"
                     data-ng-click="roomCtrl.openInvitePopup()">

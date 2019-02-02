@@ -66,6 +66,8 @@ app.controller('room.controller', function (
 
     this.checkIsMe = userId => userId === $scope.room.userId;
 
+    this.checkIsMeAdmin = adminId => adminId === $scope.room.userId;
+
     this.scrollToLastMessage = () => $anchorScroll('lastMessage');
 
     this.editMessage = message => {
@@ -99,11 +101,27 @@ app.controller('room.controller', function (
     };
 
     this.addParticipant = participantId => {
-        const roomId = $state.params.roomId;
+        const { roomId } = $state.params;
         const data = { id: participantId };
 
         $roomData.addParticipant(roomId, data)
-            .then(this._getRoomData)
+            .then(this._getRoomData(roomId))
             .then(this._getInviteUserList);
+    };
+
+    this.removeParticipant = participantId => {
+        const { roomId } = $state.params;
+        const isConfirm = confirm('Are you sure? Do you want to remove this participant?');
+        const isAdmin = this.checkIsMeAdmin($scope.room.data.adminId);
+
+        if (!isAdmin || !isConfirm || !participantId) { return; }
+
+        const data = {
+            name: $scope.room.data.name,
+            participants: $scope.room.data.participants.filter(par => par._id !== participantId)
+        };
+
+        $roomData.update(roomId, data)
+            .then(this._getRoomData(roomId));
     };
 });

@@ -26,7 +26,7 @@ app.controller('profile.controller', function ($scope, $profileData, $authData, 
     };
 
     this.deleteAccount = () => {
-        const isConfirm = confirm('Are sure? You will not be able to revert this change');
+        const isConfirm = confirm('Are you sure? You will not be able to revert this change');
 
         if (!isConfirm) return;
 
