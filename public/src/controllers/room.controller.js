@@ -73,6 +73,11 @@ app.controller('room.controller', function (
         $scope.room.message = message.text;
     };
 
+    this.cancelEditMessage = () => {
+        $scope.room.editingMessageId = null;
+        $scope.room.message = '';
+    };
+
     this.deleteMessage = messageId => $messageData.deleteMessage(messageId)
         .then(this._getHistory($state.params.roomId));
 

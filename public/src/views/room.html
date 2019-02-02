@@ -62,16 +62,20 @@
     <div class="message-form column col-8 col-mx-auto">
         <form class=" form-horizontal">
             <div class="form-group">
-                <span class="col-11">
+                <span class="col-10">
                     <textarea class="form-input"
                         data-ng-model="room.message"
                         data-ng-change="roomCtrl.onTypeMessage()"
                         placeholder="Write a message..."
                         rows="3"></textarea>
                 </span>
-                <span class="col-1 text-center">
-                    <button class="btn btn-lg btn-primary" data-ng-click="roomCtrl.sendMessage()">{{ room.editingMessageId ? 'Update': 'Send' }}</button>
-                </span>
+                <div class="col-2 px-1 text-center d-flex" style="flex-direction: column; justify-content: space-between;">
+                    <button class="btn btn-lg btn-primary"
+                        data-ng-click="roomCtrl.sendMessage()">{{ room.editingMessageId ? 'Update': 'Send' }}</button>
+                    <button class="btn btn-sm btn-error"
+                        data-ng-if="room.editingMessageId"
+                        data-ng-click="roomCtrl.cancelEditMessage()">Cancel</button>
+                </div>
             </div>
         </form>
     </div>
