@@ -6,4 +6,5 @@ app.service('$roomData', function ($data) {
     this.delete = id => $data.room.delete({ id }).$promise;
     this.leaveRoom = id => $data.room.leaveRoom({ id }).$promise;
     this.getHistory = id => $data.room.getHistory({ id }).$promise;
+    this.addParticipant = (id, roomData = {}) => $data.room.addParticipant({ id }, roomData).$promise;
 });

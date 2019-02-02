@@ -14,6 +14,7 @@ app.constant('$api', {
     deleteRoom: '/api/rooms/:id',
     leaveRoom: '/api/rooms/:id/leave',
     getMessages: '/api/rooms/:id/messages',
+    addParticipant: '/api/rooms/:id/add',
 
     updateMessage: '/api/messages/:id',
     deleteMessage: '/api/messages/:id'

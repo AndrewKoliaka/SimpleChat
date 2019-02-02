@@ -67,6 +67,11 @@ app.service('$data', function ($resource, $api) {
             url: $api.getMessages,
             method: 'GET',
             params: { id: '@id' }
+        },
+        addParticipant: {
+            url: $api.addParticipant,
+            method: 'PUT',
+            params: { id: '@id' }
         }
     });
 
